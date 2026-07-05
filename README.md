@@ -7,11 +7,6 @@ ID: 23f3003059
 ## Project structure
 .
 ├── DL-23f3003059-notebook-t22026.ipynb
-├── Deployment
-│   ├── main.py
-│   └── pyproject.toml
-├── README.md
-└── Report
-    └── a.txt
+
 
 
