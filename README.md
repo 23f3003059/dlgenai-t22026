@@ -5,12 +5,20 @@ Name: Jitendra Rathore
 ID: 23f3003059
 
 ## Project structure
-.
+```
 ├── Deployment
-│   ├── main.py
-│   └── pyproject.toml
+│   ├── app.py
+│   ├── final-model
+│   ├── label_encoder.pkl
+│   ├── mlp_model.pth
+│   ├── requirements.txt
+│   ├── tfidf_vectorizer.pkl
+│   ├── venv
+│   └── xgb_model.pkl
 ├── DL-23f3003059-notebook-t22026.ipynb
-├── README.md
-└── Report
+└── README.md
+```
+
+
 
 
