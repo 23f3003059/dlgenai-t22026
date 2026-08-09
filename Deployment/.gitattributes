@@ -1,0 +1,4 @@
+final-model/*.safetensors filter=lfs diff=lfs merge=lfs -text
+final-model/*.bin filter=lfs diff=lfs merge=lfs -text
+*.pth filter=lfs diff=lfs merge=lfs -text
+*.pkl filter=lfs diff=lfs merge=lfs -text
