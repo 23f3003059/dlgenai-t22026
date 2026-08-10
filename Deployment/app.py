@@ -28,17 +28,6 @@ class MCQNet(nn.Module):
 
 @st.cache_resource
 def load_assets():
-    
-    tfidf_path = base_dir / "tfidf_vectorizer.pkl"
-
-    st.write("TF-IDF path:", tfidf_path)
-    st.write("TF-IDF exists:", tfidf_path.exists())
-    st.write("TF-IDF size:", tfidf_path.stat().st_size if tfidf_path.exists() else "missing")
-
-    with open(tfidf_path, "rb") as f:
-        first_bytes = f.read(100)
-
-    st.write("First bytes:", first_bytes)
     # 1. Load Scikit-Learn and XGBoost assets
     tfidf = joblib.load(base_dir / "tfidf_vectorizer.pkl")
     le = joblib.load(base_dir / "label_encoder.pkl")
@@ -111,3 +100,21 @@ if st.button("Predict Answer"):
         
         st.success(f"Top Predictions: {', '.join(results)}")
         st.info(f"Confidence score of top choice: {np.max(final_probs):.2f}")
+
+
+for filename in [
+    "tfidf_vectorizer.pkl",
+    "label_encoder.pkl",
+    "xgb_model.pkl",
+    "mlp_model.pth",
+    "final-model/model.safetensors",
+]:
+    path = base_dir / filename
+
+    if path.exists():
+        st.write(
+            filename,
+            "→",
+            path.stat().st_size,
+            "bytes"
+        )
