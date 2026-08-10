@@ -5,6 +5,11 @@ import torch
 import torch.nn as nn
 import joblib
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+from pathlib import Path
+
+
+base_dir = Path(__file__).resolve().parent
+model_dir = base_dir / "final_model"
 
 class MCQNet(nn.Module):
     def __init__(self, input_dim):
@@ -17,18 +22,19 @@ class MCQNet(nn.Module):
 
 @st.cache_resource
 def load_assets():
-    tfidf = joblib.load("tfidf_vectorizer.pkl")
-    le = joblib.load("label_encoder.pkl")
-    actual_input_dim = tfidf.get_feature_names_out().shape[0] 
+    tfidf = joblib.load(base_dir / "tfidf_vectorizer.pkl")
+    le = joblib.load(base_dir / "label_encoder.pkl")
+    xgb = joblib.load(base_dir/ "xgb_model.pkl")
 
-    xgb = joblib.load("xgb_model.pkl")
+    mlp.load_state_dict(
+        torch.load(
+            base_dir / "mlp_model.pth",
+            map_location=torch.device("cpu")
+        )
+    )
 
-    mlp = MCQNet(actual_input_dim) 
-    mlp.load_state_dict(torch.load("mlp_model.pth", map_location=torch.device('cpu')))
-    mlp.eval()
-
-    tokenizer = DistilBertTokenizer.from_pretrained("./final-model")
-    bert = DistilBertForSequenceClassification.from_pretrained("./final-model")
+    tokenizer = DistilBertTokenizer.from_pretrained(model_dir)
+    bert = DistilBertForSequenceClassification.from_pretrained(model_dir)
     bert.eval()
     
     return tfidf, le, xgb, mlp, tokenizer, bert
